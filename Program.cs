@@ -15,7 +15,9 @@ namespace ExpressionTreeEF
                 new ExpressionTreeEF.User{ ID = 1, FirstName = "Kevin", LastName = "Garnett"},
                 new ExpressionTreeEF.User{ ID = 2, FirstName = "Stephen", LastName = "Curry"},
                 new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin", LastName = "Durant"},
-                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin", LastName = "lukasz"}
+                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin", LastName = "lukasz"},
+                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin1", LastName = "lukasz2"},
+                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin2", LastName = "lukas3z"}
             };
 
             var search = new List<SearchCriteria>
@@ -31,6 +33,7 @@ namespace ExpressionTreeEF
            // var user = userList.AsQueryable().Where(SearchQueryExpression.Test()).ToList();
             var query = UserSearchQuerySpecification.UserSearch(search);;
             var filter = userList.AsQueryable().Where(UserSearchQuerySpecification.UserSearch(search)).ToList();
+            var filter2 = userList.AsQueryable().Where(new CreateUserQueryExpression(search).ToExpression()).ToList();
             Console.WriteLine("ok");
         }
     }

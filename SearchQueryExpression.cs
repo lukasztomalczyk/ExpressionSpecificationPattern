@@ -23,10 +23,17 @@ namespace ExpressionTreeEF
 
         public static Expression<Func<User, bool>> Test()
         {
-            Expression<Func<User, bool>> leftExp = x => x.FirstName == "Kevin";
+                        ParameterExpression param = Expression.Parameter(typeof(User));
+            MemberExpression member = Expression.Property(param, "FirstName");
+            ConstantExpression constant = Expression.Constant("Kevin");
+            BinaryExpression body = Expression.Equal(member, constant);
+
+           var leftExp = Expression.Lambda<Func<string, bool>>(body: body, parameters: param);
+
+            //Expression<Func<User, bool>> leftExp = x => x.FirstName == "Kevin";
             Expression<Func<User, bool>> rightExp = x => x.LastName == "Durant";
 
-                  ParameterExpression param = leftExp.Parameters[0];
+            //ParameterExpression param = leftExp.Parameters[0];
             return Expression.Lambda<Func<User, bool>>(
                 Expression.AndAlso(
                     leftExp.Body,
@@ -39,13 +46,13 @@ namespace ExpressionTreeEF
                     Expression.AndAlso(leftExp.Body, rightExp.Body), param);
             }
 
-           // var param = Expression.Parameter(typeof(User), "x");
-            Expression body = Expression.AndAlso(
-                    Expression.Invoke(leftExp, leftExp.Parameters.Single()),
-                    Expression.Invoke(rightExp, rightExp.Parameters.Single()));
-           // Expression andExp = Expression.AndAlso(leftExp.Body, rightExp.Body);
-            var lambda = Expression.Lambda<Func<User, bool>>(body, param);
-                return lambda;
+        //    // var param = Expression.Parameter(typeof(User), "x");
+        //     Expression body = Expression.AndAlso(
+        //             Expression.Invoke(leftExp, leftExp.Parameters.Single()),
+        //             Expression.Invoke(rightExp, rightExp.Parameters.Single()));
+        //    // Expression andExp = Expression.AndAlso(leftExp.Body, rightExp.Body);
+        //     var lambda = Expression.Lambda<Func<User, bool>>(body, param);
+        //         return lambda;
         }
 
         // public static Expression<Func<T, bool>> AndAlso2<T>(
