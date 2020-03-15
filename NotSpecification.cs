@@ -18,7 +18,7 @@ namespace ExpressionTreeEF
 
             UnaryExpression orExpression = Expression.Not(expression.Body);
 
-            return Expression.Lambda<Func<T, bool>>(orExpression, expression.Parameters.First());
+            return Expression.Lambda<Func<T, bool>>(orExpression, expression.Parameters[0]);
         }
     }
 }

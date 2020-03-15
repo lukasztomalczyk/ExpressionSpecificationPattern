@@ -10,11 +10,20 @@ namespace ExpressionTreeEF
 
         public Specification<T> And(Specification<T> specification)
         {
+            if (this == All)
+                return specification;
+
+            if (specification == All)
+                return this;
+
             return new AndSpecification<T>(this, specification);
         }
 
         public Specification<T> Or(Specification<T> specification)
         {
+            if (specification == All || this == All)
+                return All;
+
             return new OrSpecification<T>(this, specification);
         }
 

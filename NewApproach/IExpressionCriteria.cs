@@ -5,6 +5,6 @@ namespace ExpressionTreeEF.NewApprouche
 {
     public interface IExpressionCriteria<T>
     {
-        Expression<Func<T, bool>> ToExpression(string value, OperationsEnum operation);
+        Expression<Func<T, bool>> ToExpression();
     }
 }

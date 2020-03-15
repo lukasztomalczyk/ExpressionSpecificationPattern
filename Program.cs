@@ -14,21 +14,23 @@ namespace ExpressionTreeEF
             {
                 new ExpressionTreeEF.User{ ID = 1, FirstName = "Kevin", LastName = "Garnett"},
                 new ExpressionTreeEF.User{ ID = 2, FirstName = "Stephen", LastName = "Curry"},
-                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin", LastName = "Durant"}
+                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin", LastName = "Durant"},
+                new ExpressionTreeEF.User{ ID = 3, FirstName = "Kevin", LastName = "lukasz"}
             };
 
             var search = new List<SearchCriteria>
             {
                 new SearchCriteria { Field = "FirstName", Value = "Kevin", Operation = OperationsEnum.ALL },
-                new SearchCriteria { Field = "FirstName", Value = "Kevin", Operation = OperationsEnum.AND }
+                new SearchCriteria { Field = "LastName", Value = "Durant", Operation = OperationsEnum.AND },
+                new SearchCriteria { Field = "LastName", Value = "lukasz", Operation = OperationsEnum.OR }
             };
 
 
 
 
-            var user = userList.AsQueryable().Where(SearchQueryExpression.GetDynamicQueryWithExpresionTrees("FirstName", "Kevin")).ToList();
-            //var query = UserSearchQuerySpecification.UserSearch(search);
-            //var filter = userList.AsQueryable().Where(UserSearchQuerySpecification.UserSearch(search).Compile()).ToList();
+           // var user = userList.AsQueryable().Where(SearchQueryExpression.Test()).ToList();
+            var query = UserSearchQuerySpecification.UserSearch(search);;
+            var filter = userList.AsQueryable().Where(UserSearchQuerySpecification.UserSearch(search)).ToList();
             Console.WriteLine("ok");
         }
     }

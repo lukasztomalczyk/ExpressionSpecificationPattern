@@ -19,10 +19,11 @@ namespace ExpressionTreeEF
             Expression<Func<T, bool>> leftExpression = left.ToExpression();
             Expression<Func<T, bool>> rightExpression = right.ToExpression();
 
-            ParameterExpression param = Expression.Parameter(typeof(T), "x");
-            BinaryExpression andExpression = Expression.AndAlso(leftExpression.Body, rightExpression.Body);
-
-            return Expression.Lambda<Func<T, bool>>(andExpression, leftExpression.Parameters.First());
+            ParameterExpression param = leftExpression.Parameters[0];
+            return Expression.Lambda<Func<T, bool>>(
+                Expression.AndAlso(
+                    leftExpression.Body,
+                    Expression.Invoke(rightExpression, param)), param);
         }
     }
 }
